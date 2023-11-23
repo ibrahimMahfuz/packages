@@ -40,7 +40,7 @@ class LostDataResponse {
   /// [getVideo] or [getMedia] call due to MainActivity being destroyed.
   ///
   /// Can be null if [exception] exists.
-  final XFile? file;
+  final XFile file;
 
   /// The exception of the last [getImage], [getMultiImage] or [getVideo].
   ///
@@ -50,12 +50,12 @@ class LostDataResponse {
   /// the MainActivity was not destroyed.
   ///
   /// Note that it is not the exception that caused the destruction of the MainActivity.
-  final PlatformException? exception;
+  final PlatformException exception;
 
   /// Can either be [RetrieveType.image], [RetrieveType.video], or [RetrieveType.media].
   ///
   /// If the lost data is empty, this will be null.
-  final RetrieveType? type;
+  final RetrieveType type;
 
   bool _empty = false;
 
@@ -64,5 +64,5 @@ class LostDataResponse {
   /// When [files] is populated, [file] will refer to the last item in the [files] list.
   ///
   /// Can be null if [exception] exists.
-  final List<XFile>? files;
+  final List<XFile> files;
 }

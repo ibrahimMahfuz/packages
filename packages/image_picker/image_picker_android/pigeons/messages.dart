@@ -21,13 +21,13 @@ class GeneralOptions {
 
 /// Options for image selection and output.
 class ImageSelectionOptions {
-  ImageSelectionOptions({this.maxWidth, this.maxHeight, required this.quality});
+  ImageSelectionOptions({this.maxWidth, this.maxHeight,  this.quality});
 
   /// If set, the max width that the image should be resized to fit in.
-  double? maxWidth;
+  double maxWidth;
 
   /// If set, the max height that the image should be resized to fit in.
-  double? maxHeight;
+  double maxHeight;
 
   /// The quality of the output image, from 0-100.
   ///
@@ -37,7 +37,7 @@ class ImageSelectionOptions {
 
 class MediaSelectionOptions {
   MediaSelectionOptions({
-    required this.imageSelectionOptions,
+     this.imageSelectionOptions,
   });
 
   ImageSelectionOptions imageSelectionOptions;
@@ -48,7 +48,7 @@ class VideoSelectionOptions {
   VideoSelectionOptions({this.maxDurationSeconds});
 
   /// The maximum desired length for the video, in seconds.
-  int? maxDurationSeconds;
+  int maxDurationSeconds;
 }
 
 // Corresponds to `CameraDevice` from the platform interface package.
@@ -61,16 +61,16 @@ enum SourceType { camera, gallery }
 class SourceSpecification {
   SourceSpecification(this.type, this.camera);
   SourceType type;
-  SourceCamera? camera;
+  SourceCamera camera;
 }
 
 /// An error that occurred during lost result retrieval.
 ///
 /// The data here maps to the `PlatformException` that will be created from it.
 class CacheRetrievalError {
-  CacheRetrievalError({required this.code, this.message});
+  CacheRetrievalError({ this.code, this.message});
   final String code;
-  final String? message;
+  final String message;
 }
 
 // Corresponds to `RetrieveType` from the platform interface package.
@@ -79,19 +79,19 @@ enum CacheRetrievalType { image, video }
 /// The result of retrieving cached results from a previous run.
 class CacheRetrievalResult {
   CacheRetrievalResult(
-      {required this.type, this.error, this.paths = const <String>[]});
+      { this.type, this.error, this.paths = const <String>[]});
 
   /// The type of the retrieved data.
   final CacheRetrievalType type;
 
   /// The error from the last selection, if any.
-  final CacheRetrievalError? error;
+  final CacheRetrievalError error;
 
   /// The results from the last selection, if any.
   ///
   /// Elements must not be null, by convention. See
   /// https://github.com/flutter/flutter/issues/97848
-  final List<String?> paths;
+  final List<String> paths;
 }
 
 @HostApi(dartHostTestHandler: 'TestHostImagePickerApi')
@@ -102,7 +102,7 @@ abstract class ImagePickerApi {
   /// https://github.com/flutter/flutter/issues/97848
   @TaskQueue(type: TaskQueueType.serialBackgroundThread)
   @async
-  List<String?> pickImages(
+  List<String> pickImages(
     SourceSpecification source,
     ImageSelectionOptions options,
     GeneralOptions generalOptions,
@@ -114,7 +114,7 @@ abstract class ImagePickerApi {
   /// https://github.com/flutter/flutter/issues/97848
   @TaskQueue(type: TaskQueueType.serialBackgroundThread)
   @async
-  List<String?> pickVideos(
+  List<String> pickVideos(
     SourceSpecification source,
     VideoSelectionOptions options,
     GeneralOptions generalOptions,
@@ -125,12 +125,12 @@ abstract class ImagePickerApi {
   /// Elements must not be null, by convention. See
   /// https://github.com/flutter/flutter/issues/97848
   @async
-  List<String?> pickMedia(
+  List<String> pickMedia(
     MediaSelectionOptions mediaSelectionOptions,
     GeneralOptions generalOptions,
   );
 
   /// Returns results from a previous app session, if any.
   @TaskQueue(type: TaskQueueType.serialBackgroundThread)
-  CacheRetrievalResult? retrieveLostResults();
+  CacheRetrievalResult retrieveLostResults();
 }

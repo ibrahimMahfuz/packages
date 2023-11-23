@@ -66,11 +66,11 @@ abstract class ImagePickerPlatform extends PlatformInterface {
   ///
   /// If no images were picked, the return value is null.
   @Deprecated('Use getImageFromSource instead.')
-  Future<PickedFile?> pickImage({
-    required ImageSource source,
-    double? maxWidth,
-    double? maxHeight,
-    int? imageQuality,
+  Future<PickedFile> pickImage({
+    ImageSource source,
+    double maxWidth,
+    double maxHeight,
+    int imageQuality,
     CameraDevice preferredCameraDevice = CameraDevice.rear,
   }) {
     throw UnimplementedError('pickImage() has not been implemented.');
@@ -95,10 +95,10 @@ abstract class ImagePickerPlatform extends PlatformInterface {
   ///
   /// If no images were picked, the return value is null.
   @Deprecated('Use getMultiImageWithOptions instead.')
-  Future<List<PickedFile>?> pickMultiImage({
-    double? maxWidth,
-    double? maxHeight,
-    int? imageQuality,
+  Future<List<PickedFile>> pickMultiImage({
+    double maxWidth,
+    double maxHeight,
+    int imageQuality,
   }) {
     throw UnimplementedError('pickMultiImage() has not been implemented.');
   }
@@ -120,10 +120,10 @@ abstract class ImagePickerPlatform extends PlatformInterface {
   ///
   /// If no images were picked, the return value is null.
   @Deprecated('Use getVideo instead.')
-  Future<PickedFile?> pickVideo({
-    required ImageSource source,
+  Future<PickedFile> pickVideo({
+    ImageSource source,
     CameraDevice preferredCameraDevice = CameraDevice.rear,
-    Duration? maxDuration,
+    Duration maxDuration,
   }) {
     throw UnimplementedError('pickVideo() has not been implemented.');
   }
@@ -176,11 +176,11 @@ abstract class ImagePickerPlatform extends PlatformInterface {
   ///
   /// If no images were picked, the return value is null.
   @Deprecated('Use getImageFromSource instead.')
-  Future<XFile?> getImage({
-    required ImageSource source,
-    double? maxWidth,
-    double? maxHeight,
-    int? imageQuality,
+  Future<XFile> getImage({
+    ImageSource source,
+    double maxWidth,
+    double maxHeight,
+    int imageQuality,
     CameraDevice preferredCameraDevice = CameraDevice.rear,
   }) {
     throw UnimplementedError('getImage() has not been implemented.');
@@ -205,10 +205,10 @@ abstract class ImagePickerPlatform extends PlatformInterface {
   ///
   /// If no images were picked, the return value is null.
   @Deprecated('Use getMultiImageWithOptions instead.')
-  Future<List<XFile>?> getMultiImage({
-    double? maxWidth,
-    double? maxHeight,
-    int? imageQuality,
+  Future<List<XFile>> getMultiImage({
+    double maxWidth,
+    double maxHeight,
+    int imageQuality,
   }) {
     throw UnimplementedError('getMultiImage() has not been implemented.');
   }
@@ -226,7 +226,7 @@ abstract class ImagePickerPlatform extends PlatformInterface {
   ///
   /// If no images or videos were picked, the return value is an empty list.
   Future<List<XFile>> getMedia({
-    required MediaOptions options,
+    MediaOptions options,
   }) {
     throw UnimplementedError('getMedia() has not been implemented.');
   }
@@ -247,10 +247,10 @@ abstract class ImagePickerPlatform extends PlatformInterface {
   /// in this call. You can then call [getLostData] when your app relaunches to retrieve the lost data.
   ///
   /// If no images were picked, the return value is null.
-  Future<XFile?> getVideo({
-    required ImageSource source,
+  Future<XFile> getVideo({
+    ImageSource source,
     CameraDevice preferredCameraDevice = CameraDevice.rear,
-    Duration? maxDuration,
+    Duration maxDuration,
   }) {
     throw UnimplementedError('getVideo() has not been implemented.');
   }
@@ -290,8 +290,8 @@ abstract class ImagePickerPlatform extends PlatformInterface {
   /// when your app relaunches to retrieve the lost data.
   ///
   /// If no images were picked, the return value is null.
-  Future<XFile?> getImageFromSource({
-    required ImageSource source,
+  Future<XFile> getImageFromSource({
+    ImageSource source,
     ImagePickerOptions options = const ImagePickerOptions(),
   }) {
     return getImage(
@@ -314,7 +314,7 @@ abstract class ImagePickerPlatform extends PlatformInterface {
   Future<List<XFile>> getMultiImageWithOptions({
     MultiImagePickerOptions options = const MultiImagePickerOptions(),
   }) async {
-    final List<XFile>? pickedImages = await getMultiImage(
+    final List<XFile> pickedImages = await getMultiImage(
       maxWidth: options.imageOptions.maxWidth,
       maxHeight: options.imageOptions.maxHeight,
       imageQuality: options.imageOptions.imageQuality,
@@ -339,7 +339,7 @@ abstract class CameraDelegatingImagePickerPlatform extends ImagePickerPlatform {
   ///
   /// When it is null, attempting to use [ImageSource.camera] will throw a
   /// [StateError].
-  ImagePickerCameraDelegate? cameraDelegate;
+  ImagePickerCameraDelegate cameraDelegate;
 
   @override
   bool supportsImageSource(ImageSource source) {
@@ -350,12 +350,12 @@ abstract class CameraDelegatingImagePickerPlatform extends ImagePickerPlatform {
   }
 
   @override
-  Future<XFile?> getImageFromSource({
-    required ImageSource source,
+  Future<XFile> getImageFromSource({
+    ImageSource source,
     ImagePickerOptions options = const ImagePickerOptions(),
   }) async {
     if (source == ImageSource.camera) {
-      final ImagePickerCameraDelegate? delegate = cameraDelegate;
+      final ImagePickerCameraDelegate delegate = cameraDelegate;
       if (delegate == null) {
         throw StateError(
             'This implementation of ImagePickerPlatform requires a '
@@ -370,13 +370,13 @@ abstract class CameraDelegatingImagePickerPlatform extends ImagePickerPlatform {
   }
 
   @override
-  Future<XFile?> getVideo({
-    required ImageSource source,
+  Future<XFile> getVideo({
+    ImageSource source,
     CameraDevice preferredCameraDevice = CameraDevice.rear,
-    Duration? maxDuration,
+    Duration maxDuration,
   }) async {
     if (source == ImageSource.camera) {
-      final ImagePickerCameraDelegate? delegate = cameraDelegate;
+      final ImagePickerCameraDelegate delegate = cameraDelegate;
       if (delegate == null) {
         throw StateError(
             'This implementation of ImagePickerPlatform requires a '

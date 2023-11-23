@@ -12,7 +12,7 @@ import 'src/messages.g.dart';
 /// An Android implementation of [ImagePickerPlatform].
 class ImagePickerAndroid extends ImagePickerPlatform {
   /// Creates a new plugin implementation instance.
-  ImagePickerAndroid({@visibleForTesting ImagePickerApi? api})
+  ImagePickerAndroid({@visibleForTesting ImagePickerApi api})
       : _hostApi = api ?? ImagePickerApi();
 
   final ImagePickerApi _hostApi;
@@ -28,14 +28,14 @@ class ImagePickerAndroid extends ImagePickerPlatform {
   }
 
   @override
-  Future<PickedFile?> pickImage({
-    required ImageSource source,
-    double? maxWidth,
-    double? maxHeight,
-    int? imageQuality,
+  Future<PickedFile> pickImage({
+    ImageSource source,
+    double maxWidth,
+    double maxHeight,
+    int imageQuality,
     CameraDevice preferredCameraDevice = CameraDevice.rear,
   }) async {
-    final String? path = await _getImagePath(
+    final String path = await _getImagePath(
       source: source,
       maxWidth: maxWidth,
       maxHeight: maxHeight,
@@ -46,10 +46,10 @@ class ImagePickerAndroid extends ImagePickerPlatform {
   }
 
   @override
-  Future<List<PickedFile>?> pickMultiImage({
-    double? maxWidth,
-    double? maxHeight,
-    int? imageQuality,
+  Future<List<PickedFile>> pickMultiImage({
+    double maxWidth,
+    double maxHeight,
+    int imageQuality,
   }) async {
     final List<dynamic> paths = await _getMultiImagePath(
       maxWidth: maxWidth,
@@ -64,9 +64,9 @@ class ImagePickerAndroid extends ImagePickerPlatform {
   }
 
   Future<List<dynamic>> _getMultiImagePath({
-    double? maxWidth,
-    double? maxHeight,
-    int? imageQuality,
+    double maxWidth,
+    double maxHeight,
+    int imageQuality,
   }) {
     if (imageQuality != null && (imageQuality < 0 || imageQuality > 100)) {
       throw ArgumentError.value(
@@ -92,11 +92,11 @@ class ImagePickerAndroid extends ImagePickerPlatform {
     );
   }
 
-  Future<String?> _getImagePath({
-    required ImageSource source,
-    double? maxWidth,
-    double? maxHeight,
-    int? imageQuality,
+  Future<String> _getImagePath({
+    ImageSource source,
+    double maxWidth,
+    double maxHeight,
+    int imageQuality,
     CameraDevice preferredCameraDevice = CameraDevice.rear,
     bool requestFullMetadata = true,
   }) async {
@@ -113,7 +113,7 @@ class ImagePickerAndroid extends ImagePickerPlatform {
       throw ArgumentError.value(maxHeight, 'maxHeight', 'cannot be negative');
     }
 
-    final List<String?> paths = await _hostApi.pickImages(
+    final List<String> paths = await _hostApi.pickImages(
       _buildSourceSpec(source, preferredCameraDevice),
       ImageSelectionOptions(
           maxWidth: maxWidth,
@@ -128,12 +128,12 @@ class ImagePickerAndroid extends ImagePickerPlatform {
   }
 
   @override
-  Future<PickedFile?> pickVideo({
-    required ImageSource source,
+  Future<PickedFile> pickVideo({
+    ImageSource source,
     CameraDevice preferredCameraDevice = CameraDevice.rear,
-    Duration? maxDuration,
+    Duration maxDuration,
   }) async {
-    final String? path = await _getVideoPath(
+    final String path = await _getVideoPath(
       source: source,
       maxDuration: maxDuration,
       preferredCameraDevice: preferredCameraDevice,
@@ -141,14 +141,14 @@ class ImagePickerAndroid extends ImagePickerPlatform {
     return path != null ? PickedFile(path) : null;
   }
 
-  Future<String?> _getVideoPath({
-    required ImageSource source,
+  Future<String> _getVideoPath({
+    ImageSource source,
     CameraDevice preferredCameraDevice = CameraDevice.rear,
-    Duration? maxDuration,
+    Duration maxDuration,
   }) async {
-    final List<String?> paths = await _hostApi.pickVideos(
+    final List<String> paths = await _hostApi.pickVideos(
       _buildSourceSpec(source, preferredCameraDevice),
-      VideoSelectionOptions(maxDurationSeconds: maxDuration?.inSeconds),
+      VideoSelectionOptions(maxDurationSeconds: maxDuration.inSeconds),
       GeneralOptions(
         allowMultiple: false,
         usePhotoPicker: useAndroidPhotoPicker,
@@ -158,14 +158,14 @@ class ImagePickerAndroid extends ImagePickerPlatform {
   }
 
   @override
-  Future<XFile?> getImage({
-    required ImageSource source,
-    double? maxWidth,
-    double? maxHeight,
-    int? imageQuality,
+  Future<XFile> getImage({
+    ImageSource source,
+    double maxWidth,
+    double maxHeight,
+    int imageQuality,
     CameraDevice preferredCameraDevice = CameraDevice.rear,
   }) async {
-    final String? path = await _getImagePath(
+    final String path = await _getImagePath(
       source: source,
       maxWidth: maxWidth,
       maxHeight: maxHeight,
@@ -176,11 +176,11 @@ class ImagePickerAndroid extends ImagePickerPlatform {
   }
 
   @override
-  Future<XFile?> getImageFromSource({
-    required ImageSource source,
+  Future<XFile> getImageFromSource({
+    ImageSource source,
     ImagePickerOptions options = const ImagePickerOptions(),
   }) async {
-    final String? path = await _getImagePath(
+    final String path = await _getImagePath(
       source: source,
       maxHeight: options.maxHeight,
       maxWidth: options.maxWidth,
@@ -192,10 +192,10 @@ class ImagePickerAndroid extends ImagePickerPlatform {
   }
 
   @override
-  Future<List<XFile>?> getMultiImage({
-    double? maxWidth,
-    double? maxHeight,
-    int? imageQuality,
+  Future<List<XFile>> getMultiImage({
+    double maxWidth,
+    double maxHeight,
+    int imageQuality,
   }) async {
     final List<dynamic> paths = await _getMultiImagePath(
       maxWidth: maxWidth,
@@ -211,7 +211,7 @@ class ImagePickerAndroid extends ImagePickerPlatform {
 
   @override
   Future<List<XFile>> getMedia({
-    required MediaOptions options,
+    MediaOptions options,
   }) async {
     return (await _hostApi.pickMedia(
       _mediaOptionsToMediaSelectionOptions(options),
@@ -220,17 +220,17 @@ class ImagePickerAndroid extends ImagePickerPlatform {
         usePhotoPicker: useAndroidPhotoPicker,
       ),
     ))
-        .map((String? path) => XFile(path!))
+        .map((String path) => XFile(path!))
         .toList();
   }
 
   @override
-  Future<XFile?> getVideo({
-    required ImageSource source,
+  Future<XFile> getVideo({
+    ImageSource source,
     CameraDevice preferredCameraDevice = CameraDevice.rear,
-    Duration? maxDuration,
+    Duration maxDuration,
   }) async {
-    final String? path = await _getVideoPath(
+    final String path = await _getVideoPath(
       source: source,
       maxDuration: maxDuration,
       preferredCameraDevice: preferredCameraDevice,
@@ -249,10 +249,10 @@ class ImagePickerAndroid extends ImagePickerPlatform {
   }
 
   ImageSelectionOptions _imageOptionsToImageSelectionOptionsWithValidator(
-      ImageOptions? imageOptions) {
-    final double? maxHeight = imageOptions?.maxHeight;
-    final double? maxWidth = imageOptions?.maxWidth;
-    final int? imageQuality = imageOptions?.imageQuality;
+      ImageOptions imageOptions) {
+    final double maxHeight = imageOptions.maxHeight;
+    final double maxWidth = imageOptions.maxWidth;
+    final int imageQuality = imageOptions.imageQuality;
 
     if (imageQuality != null && (imageQuality < 0 || imageQuality > 100)) {
       throw ArgumentError.value(
@@ -287,7 +287,7 @@ class ImagePickerAndroid extends ImagePickerPlatform {
 
   @override
   Future<LostDataResponse> getLostData() async {
-    final CacheRetrievalResult? result = await _hostApi.retrieveLostResults();
+    final CacheRetrievalResult result = await _hostApi.retrieveLostResults();
 
     if (result == null) {
       return LostDataResponse.empty();
@@ -296,15 +296,15 @@ class ImagePickerAndroid extends ImagePickerPlatform {
     // There must either be data or an error if the response wasn't null.
     assert(result.paths.isEmpty != (result.error == null));
 
-    final CacheRetrievalError? error = result.error;
-    final PlatformException? exception = error == null
+    final CacheRetrievalError error = result.error;
+    final PlatformException exception = error == null
         ? null
         : PlatformException(code: error.code, message: error.message);
 
     // Entries are guaranteed not to be null, even though that's not currently
     // expressible in Pigeon.
     final List<XFile> pickedFileList =
-        result.paths.map((String? path) => XFile(path!)).toList();
+        result.paths.map((String path) => XFile(path!)).toList();
 
     return LostDataResponse(
       file: pickedFileList.isEmpty ? null : pickedFileList.last,

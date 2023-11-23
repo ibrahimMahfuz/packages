@@ -69,11 +69,11 @@ class ImagePicker {
   /// the camera or photos gallery, no camera is available, plugin is already in use,
   /// temporary file could not be created (iOS only), plugin activity could not
   /// be allocated (Android only) or due to an unknown error.
-  Future<XFile?> pickImage({
-    required ImageSource source,
-    double? maxWidth,
-    double? maxHeight,
-    int? imageQuality,
+  Future<XFile> pickImage({
+    ImageSource source,
+    double maxWidth,
+    double maxHeight,
+    int imageQuality,
     CameraDevice preferredCameraDevice = CameraDevice.rear,
     bool requestFullMetadata = true,
   }) {
@@ -125,9 +125,9 @@ class ImagePicker {
   ///
   /// See also [pickImage] to allow users to only pick a single image.
   Future<List<XFile>> pickMultiImage({
-    double? maxWidth,
-    double? maxHeight,
-    int? imageQuality,
+    double maxWidth,
+    double maxHeight,
+    int imageQuality,
     bool requestFullMetadata = true,
   }) {
     final ImageOptions imageOptions = ImageOptions.createAndValidate(
@@ -179,10 +179,10 @@ class ImagePicker {
   /// or due to an unknown error.
   ///
   /// If no image or video was picked, the return value is null.
-  Future<XFile?> pickMedia({
-    double? maxWidth,
-    double? maxHeight,
-    int? imageQuality,
+  Future<XFile> pickMedia({
+    double maxWidth,
+    double maxHeight,
+    int imageQuality,
     bool requestFullMetadata = true,
   }) async {
     final List<XFile> listMedia = await platform.getMedia(
@@ -236,9 +236,9 @@ class ImagePicker {
   ///
   /// If no images or videos were picked, the return value is an empty list.
   Future<List<XFile>> pickMultipleMedia({
-    double? maxWidth,
-    double? maxHeight,
-    int? imageQuality,
+    double maxWidth,
+    double maxHeight,
+    int imageQuality,
     bool requestFullMetadata = true,
   }) {
     return platform.getMedia(
@@ -276,10 +276,10 @@ class ImagePicker {
   /// temporary file could not be created and video could not be cached (iOS only),
   /// plugin activity could not be allocated (Android only) or due to an unknown error.
   ///
-  Future<XFile?> pickVideo({
-    required ImageSource source,
+  Future<XFile> pickVideo({
+    ImageSource source,
     CameraDevice preferredCameraDevice = CameraDevice.rear,
-    Duration? maxDuration,
+    Duration maxDuration,
   }) {
     return platform.getVideo(
       source: source,

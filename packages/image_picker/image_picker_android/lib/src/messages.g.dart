@@ -28,8 +28,8 @@ enum CacheRetrievalType {
 
 class GeneralOptions {
   GeneralOptions({
-    required this.allowMultiple,
-    required this.usePhotoPicker,
+     this.allowMultiple,
+     this.usePhotoPicker,
   });
 
   bool allowMultiple;
@@ -37,17 +37,17 @@ class GeneralOptions {
   bool usePhotoPicker;
 
   Object encode() {
-    return <Object?>[
+    return <Object>[
       allowMultiple,
       usePhotoPicker,
     ];
   }
 
   static GeneralOptions decode(Object result) {
-    result as List<Object?>;
+    result as List<Object>;
     return GeneralOptions(
-      allowMultiple: result[0]! as bool,
-      usePhotoPicker: result[1]! as bool,
+      allowMultiple: result[0] as bool,
+      usePhotoPicker: result[1] as bool,
     );
   }
 }
@@ -57,14 +57,14 @@ class ImageSelectionOptions {
   ImageSelectionOptions({
     this.maxWidth,
     this.maxHeight,
-    required this.quality,
+     this.quality,
   });
 
   /// If set, the max width that the image should be resized to fit in.
-  double? maxWidth;
+  double maxWidth;
 
   /// If set, the max height that the image should be resized to fit in.
-  double? maxHeight;
+  double maxHeight;
 
   /// The quality of the output image, from 0-100.
   ///
@@ -72,7 +72,7 @@ class ImageSelectionOptions {
   int quality;
 
   Object encode() {
-    return <Object?>[
+    return <Object>[
       maxWidth,
       maxHeight,
       quality,
@@ -80,33 +80,33 @@ class ImageSelectionOptions {
   }
 
   static ImageSelectionOptions decode(Object result) {
-    result as List<Object?>;
+    result as List<Object>;
     return ImageSelectionOptions(
-      maxWidth: result[0] as double?,
-      maxHeight: result[1] as double?,
-      quality: result[2]! as int,
+      maxWidth: result[0] as double,
+      maxHeight: result[1] as double,
+      quality: result[2] as int,
     );
   }
 }
 
 class MediaSelectionOptions {
   MediaSelectionOptions({
-    required this.imageSelectionOptions,
+     this.imageSelectionOptions,
   });
 
   ImageSelectionOptions imageSelectionOptions;
 
   Object encode() {
-    return <Object?>[
+    return <Object>[
       imageSelectionOptions.encode(),
     ];
   }
 
   static MediaSelectionOptions decode(Object result) {
-    result as List<Object?>;
+    result as List<Object>;
     return MediaSelectionOptions(
       imageSelectionOptions:
-          ImageSelectionOptions.decode(result[0]! as List<Object?>),
+          ImageSelectionOptions.decode(result[0] as List<Object>),
     );
   }
 }
@@ -118,18 +118,18 @@ class VideoSelectionOptions {
   });
 
   /// The maximum desired length for the video, in seconds.
-  int? maxDurationSeconds;
+  int maxDurationSeconds;
 
   Object encode() {
-    return <Object?>[
+    return <Object>[
       maxDurationSeconds,
     ];
   }
 
   static VideoSelectionOptions decode(Object result) {
-    result as List<Object?>;
+    result as List<Object>;
     return VideoSelectionOptions(
-      maxDurationSeconds: result[0] as int?,
+      maxDurationSeconds: result[0] as int,
     );
   }
 }
@@ -137,26 +137,26 @@ class VideoSelectionOptions {
 /// Specification for the source of an image or video selection.
 class SourceSpecification {
   SourceSpecification({
-    required this.type,
+     this.type,
     this.camera,
   });
 
   SourceType type;
 
-  SourceCamera? camera;
+  SourceCamera camera;
 
   Object encode() {
-    return <Object?>[
+    return <Object>[
       type.index,
-      camera?.index,
+      camera.index,
     ];
   }
 
   static SourceSpecification decode(Object result) {
-    result as List<Object?>;
+    result as List<Object>;
     return SourceSpecification(
-      type: SourceType.values[result[0]! as int],
-      camera: result[1] != null ? SourceCamera.values[result[1]! as int] : null,
+      type: SourceType.values[result[0] as int],
+      camera: result[1] != null ? SourceCamera.values[result[1] as int] : null,
     );
   }
 }
@@ -166,26 +166,26 @@ class SourceSpecification {
 /// The data here maps to the `PlatformException` that will be created from it.
 class CacheRetrievalError {
   CacheRetrievalError({
-    required this.code,
+     this.code,
     this.message,
   });
 
   String code;
 
-  String? message;
+  String message;
 
   Object encode() {
-    return <Object?>[
+    return <Object>[
       code,
       message,
     ];
   }
 
   static CacheRetrievalError decode(Object result) {
-    result as List<Object?>;
+    result as List<Object>;
     return CacheRetrievalError(
-      code: result[0]! as String,
-      message: result[1] as String?,
+      code: result[0] as String,
+      message: result[1] as String,
     );
   }
 }
@@ -193,39 +193,39 @@ class CacheRetrievalError {
 /// The result of retrieving cached results from a previous run.
 class CacheRetrievalResult {
   CacheRetrievalResult({
-    required this.type,
+     this.type,
     this.error,
-    required this.paths,
+     this.paths,
   });
 
   /// The type of the retrieved data.
   CacheRetrievalType type;
 
   /// The error from the last selection, if any.
-  CacheRetrievalError? error;
+  CacheRetrievalError error;
 
   /// The results from the last selection, if any.
   ///
   /// Elements must not be null, by convention. See
   /// https://github.com/flutter/flutter/issues/97848
-  List<String?> paths;
+  List<String> paths;
 
   Object encode() {
-    return <Object?>[
+    return <Object>[
       type.index,
-      error?.encode(),
+      error.encode(),
       paths,
     ];
   }
 
   static CacheRetrievalResult decode(Object result) {
-    result as List<Object?>;
+    result as List<Object>;
     return CacheRetrievalResult(
-      type: CacheRetrievalType.values[result[0]! as int],
+      type: CacheRetrievalType.values[result[0] as int],
       error: result[1] != null
-          ? CacheRetrievalError.decode(result[1]! as List<Object?>)
+          ? CacheRetrievalError.decode(result[1] as List<Object>)
           : null,
-      paths: (result[2] as List<Object?>?)!.cast<String?>(),
+      paths: (result[2] as List<Object>).cast<String>(),
     );
   }
 }
@@ -233,7 +233,7 @@ class CacheRetrievalResult {
 class _ImagePickerApiCodec extends StandardMessageCodec {
   const _ImagePickerApiCodec();
   @override
-  void writeValue(WriteBuffer buffer, Object? value) {
+  void writeValue(WriteBuffer buffer, Object value) {
     if (value is CacheRetrievalError) {
       buffer.putUint8(128);
       writeValue(buffer, value.encode());
@@ -261,22 +261,22 @@ class _ImagePickerApiCodec extends StandardMessageCodec {
   }
 
   @override
-  Object? readValueOfType(int type, ReadBuffer buffer) {
+  Object readValueOfType(int type, ReadBuffer buffer) {
     switch (type) {
       case 128:
-        return CacheRetrievalError.decode(readValue(buffer)!);
+        return CacheRetrievalError.decode(readValue(buffer));
       case 129:
-        return CacheRetrievalResult.decode(readValue(buffer)!);
+        return CacheRetrievalResult.decode(readValue(buffer));
       case 130:
-        return GeneralOptions.decode(readValue(buffer)!);
+        return GeneralOptions.decode(readValue(buffer));
       case 131:
-        return ImageSelectionOptions.decode(readValue(buffer)!);
+        return ImageSelectionOptions.decode(readValue(buffer));
       case 132:
-        return MediaSelectionOptions.decode(readValue(buffer)!);
+        return MediaSelectionOptions.decode(readValue(buffer));
       case 133:
-        return SourceSpecification.decode(readValue(buffer)!);
+        return SourceSpecification.decode(readValue(buffer));
       case 134:
-        return VideoSelectionOptions.decode(readValue(buffer)!);
+        return VideoSelectionOptions.decode(readValue(buffer));
       default:
         return super.readValueOfType(type, buffer);
     }
@@ -287,26 +287,26 @@ class ImagePickerApi {
   /// Constructor for [ImagePickerApi].  The [binaryMessenger] named argument is
   /// available for dependency injection.  If it is left null, the default
   /// BinaryMessenger will be used which routes to the host platform.
-  ImagePickerApi({BinaryMessenger? binaryMessenger})
+  ImagePickerApi({BinaryMessenger binaryMessenger})
       : _binaryMessenger = binaryMessenger;
-  final BinaryMessenger? _binaryMessenger;
+  final BinaryMessenger _binaryMessenger;
 
-  static const MessageCodec<Object?> codec = _ImagePickerApiCodec();
+  static const MessageCodec<Object> codec = _ImagePickerApiCodec();
 
   /// Selects images and returns their paths.
   ///
   /// Elements must not be null, by convention. See
   /// https://github.com/flutter/flutter/issues/97848
-  Future<List<String?>> pickImages(
+  Future<List<String>> pickImages(
       SourceSpecification arg_source,
       ImageSelectionOptions arg_options,
       GeneralOptions arg_generalOptions) async {
-    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+    final BasicMessageChannel<Object> channel = BasicMessageChannel<Object>(
         'dev.flutter.pigeon.ImagePickerApi.pickImages', codec,
         binaryMessenger: _binaryMessenger);
-    final List<Object?>? replyList = await channel
-            .send(<Object?>[arg_source, arg_options, arg_generalOptions])
-        as List<Object?>?;
+    final List<Object> replyList = await channel
+            .send(<Object>[arg_source, arg_options, arg_generalOptions])
+        as List<Object>;
     if (replyList == null) {
       throw PlatformException(
         code: 'channel-error',
@@ -314,8 +314,8 @@ class ImagePickerApi {
       );
     } else if (replyList.length > 1) {
       throw PlatformException(
-        code: replyList[0]! as String,
-        message: replyList[1] as String?,
+        code: replyList[0] as String,
+        message: replyList[1] as String,
         details: replyList[2],
       );
     } else if (replyList[0] == null) {
@@ -324,7 +324,7 @@ class ImagePickerApi {
         message: 'Host platform returned null value for non-null return value.',
       );
     } else {
-      return (replyList[0] as List<Object?>?)!.cast<String?>();
+      return (replyList[0] as List<Object>).cast<String>();
     }
   }
 
@@ -332,16 +332,16 @@ class ImagePickerApi {
   ///
   /// Elements must not be null, by convention. See
   /// https://github.com/flutter/flutter/issues/97848
-  Future<List<String?>> pickVideos(
+  Future<List<String>> pickVideos(
       SourceSpecification arg_source,
       VideoSelectionOptions arg_options,
       GeneralOptions arg_generalOptions) async {
-    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+    final BasicMessageChannel<Object> channel = BasicMessageChannel<Object>(
         'dev.flutter.pigeon.ImagePickerApi.pickVideos', codec,
         binaryMessenger: _binaryMessenger);
-    final List<Object?>? replyList = await channel
-            .send(<Object?>[arg_source, arg_options, arg_generalOptions])
-        as List<Object?>?;
+    final List<Object> replyList = await channel
+            .send(<Object>[arg_source, arg_options, arg_generalOptions])
+        as List<Object>;
     if (replyList == null) {
       throw PlatformException(
         code: 'channel-error',
@@ -349,8 +349,8 @@ class ImagePickerApi {
       );
     } else if (replyList.length > 1) {
       throw PlatformException(
-        code: replyList[0]! as String,
-        message: replyList[1] as String?,
+        code: replyList[0] as String,
+        message: replyList[1] as String,
         details: replyList[2],
       );
     } else if (replyList[0] == null) {
@@ -359,7 +359,7 @@ class ImagePickerApi {
         message: 'Host platform returned null value for non-null return value.',
       );
     } else {
-      return (replyList[0] as List<Object?>?)!.cast<String?>();
+      return (replyList[0] as List<Object>).cast<String>();
     }
   }
 
@@ -367,15 +367,15 @@ class ImagePickerApi {
   ///
   /// Elements must not be null, by convention. See
   /// https://github.com/flutter/flutter/issues/97848
-  Future<List<String?>> pickMedia(
+  Future<List<String>> pickMedia(
       MediaSelectionOptions arg_mediaSelectionOptions,
       GeneralOptions arg_generalOptions) async {
-    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+    final BasicMessageChannel<Object> channel = BasicMessageChannel<Object>(
         'dev.flutter.pigeon.ImagePickerApi.pickMedia', codec,
         binaryMessenger: _binaryMessenger);
-    final List<Object?>? replyList = await channel
-            .send(<Object?>[arg_mediaSelectionOptions, arg_generalOptions])
-        as List<Object?>?;
+    final List<Object> replyList = await channel
+            .send(<Object>[arg_mediaSelectionOptions, arg_generalOptions])
+        as List<Object>;
     if (replyList == null) {
       throw PlatformException(
         code: 'channel-error',
@@ -383,8 +383,8 @@ class ImagePickerApi {
       );
     } else if (replyList.length > 1) {
       throw PlatformException(
-        code: replyList[0]! as String,
-        message: replyList[1] as String?,
+        code: replyList[0] as String,
+        message: replyList[1] as String,
         details: replyList[2],
       );
     } else if (replyList[0] == null) {
@@ -393,16 +393,16 @@ class ImagePickerApi {
         message: 'Host platform returned null value for non-null return value.',
       );
     } else {
-      return (replyList[0] as List<Object?>?)!.cast<String?>();
+      return (replyList[0] as List<Object>).cast<String>();
     }
   }
 
   /// Returns results from a previous app session, if any.
-  Future<CacheRetrievalResult?> retrieveLostResults() async {
-    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+  Future<CacheRetrievalResult> retrieveLostResults() async {
+    final BasicMessageChannel<Object> channel = BasicMessageChannel<Object>(
         'dev.flutter.pigeon.ImagePickerApi.retrieveLostResults', codec,
         binaryMessenger: _binaryMessenger);
-    final List<Object?>? replyList = await channel.send(null) as List<Object?>?;
+    final List<Object> replyList = await channel.send(null) as List<Object>;
     if (replyList == null) {
       throw PlatformException(
         code: 'channel-error',
@@ -410,12 +410,12 @@ class ImagePickerApi {
       );
     } else if (replyList.length > 1) {
       throw PlatformException(
-        code: replyList[0]! as String,
-        message: replyList[1] as String?,
+        code: replyList[0] as String,
+        message: replyList[1] as String,
         details: replyList[2],
       );
     } else {
-      return (replyList[0] as CacheRetrievalResult?);
+      return (replyList[0] as CacheRetrievalResult);
     }
   }
 }

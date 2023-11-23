@@ -26,7 +26,7 @@ class ImagePickerCameraDelegateOptions {
   /// The maximum duration to allow when recording a video.
   ///
   /// Defaults to null, meaning no maximum duration.
-  final Duration? maxVideoDuration;
+  final Duration maxVideoDuration;
 }
 
 /// A delegate for `ImagePickerPlatform` implementations that do not provide
@@ -37,7 +37,7 @@ abstract class ImagePickerCameraDelegate {
   /// resulting image file.
   ///
   /// Returns null if the photo could not be taken, or the user cancelled.
-  Future<XFile?> takePhoto({
+  Future<XFile> takePhoto({
     ImagePickerCameraDelegateOptions options =
         const ImagePickerCameraDelegateOptions(),
   });
@@ -46,7 +46,7 @@ abstract class ImagePickerCameraDelegate {
   /// resulting video file.
   ///
   /// Returns null if the video could not be recorded, or the user cancelled.
-  Future<XFile?> takeVideo({
+  Future<XFile> takeVideo({
     ImagePickerCameraDelegateOptions options =
         const ImagePickerCameraDelegateOptions(),
   });

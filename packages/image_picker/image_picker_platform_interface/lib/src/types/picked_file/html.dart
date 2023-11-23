@@ -17,13 +17,13 @@ class PickedFile extends PickedFileBase {
   ///
   /// Optionally, this can be initialized with `bytes`
   /// so no http requests are performed to retrieve files later.
-  const PickedFile(this.path, {Uint8List? bytes})
+  const PickedFile(this.path, {Uint8List bytes})
       : _initBytes = bytes,
         super(path);
 
   @override
   final String path;
-  final Uint8List? _initBytes;
+  final Uint8List _initBytes;
 
   Future<Uint8List> get _bytes async {
     if (_initBytes != null) {
@@ -43,7 +43,7 @@ class PickedFile extends PickedFileBase {
   }
 
   @override
-  Stream<Uint8List> openRead([int? start, int? end]) async* {
+  Stream<Uint8List> openRead([int start, int end]) async* {
     final Uint8List bytes = await _bytes;
     yield bytes.sublist(start ?? 0, end ?? bytes.length);
   }
