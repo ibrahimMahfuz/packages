@@ -21,8 +21,16 @@ flutter:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_plugin_android_lifecycle: ^2.0.1
-  image_picker_platform_interface: ^2.8.0
+  flutter_plugin_android_lifecycle:
+    git:
+      url: https://github.com/ibrahimMahfuz/packages.git
+      path: packages/flutter_plugin_android_lifecycle
+      ref: image-picker-1
+  image_picker_platform_interface:
+    git:
+      url: https://github.com/ibrahimMahfuz/packages.git
+      path: packages/image_picker/image_picker_platform_interface
+      ref: image-picker-1
 
 dev_dependencies:
   flutter_test:
