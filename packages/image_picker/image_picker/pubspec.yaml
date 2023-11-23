@@ -22,12 +22,12 @@ dependencies:
     git:
       url: https://github.com/ibrahimMahfuz/packages.git
       path: packages/image_picker/image_picker_android
-      ref: image-picker-3
+      ref: image-picker-4
   image_picker_platform_interface:
     git:
       url: https://github.com/ibrahimMahfuz/packages.git
       path: packages/image_picker/image_picker_platform_interface
-      ref: image-picker-3
+      ref: image-picker-4
 
 
 dev_dependencies:
@@ -40,7 +40,7 @@ dev_dependencies:
     git:
       url: https://github.com/ibrahimMahfuz/packages.git
       path: packages/plugin_platform_interface
-      ref: image-picker-3
+      ref: image-picker-4
 
 topics:
   - camera
